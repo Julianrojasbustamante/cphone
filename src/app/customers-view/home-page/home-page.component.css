@@ -1,0 +1,12 @@
+.slider-height {
+  height: 400px;
+}
+
+.opaco {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.opaco:hover {
+  opacity: 0.5;
+}

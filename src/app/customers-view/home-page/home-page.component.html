@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="content">
+    <p class="text-center display-2 my-4"><b>Inicio</b></p>
+    <p class="display-5">Productos destacados</p>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button *ngFor="let producto of productosDestacados; index as i" type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class]="i==0?'active':''" [attr.aria-current]="i==0" aria-label="Slide 1"></button>
+          </div>
+          <div class="carousel-inner">
+            <div  *ngFor="let producto of productosDestacados; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">
+              <img src="assets/img/{{producto.imagenPrincipal}}" class="opaco slider-height d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>{{producto.nombre}}</h5>
+                <p>{{producto.descripcion}}</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p class="display-5 my-5">Categorias destacadas</p>
+    <div class="row text-center">
+      <div class="col-md-3" *ngFor="let categoria of categorias; let i = index">
+        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 0" type="button" class="my-3 rounded-pill btn btn-warning px-5 py-2">{{categoria.nombre}}</a>
+        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 1" type="button" class="my-3 rounded-pill btn btn-danger px-5 py-2">{{categoria.nombre}}</a>
+        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 2" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">{{categoria.nombre}}</a>
+      </div>
+    </div>
+  </div>
+</div>
