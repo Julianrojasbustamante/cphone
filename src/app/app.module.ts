@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { DataTablesModule } from "angular-datatables";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { DataTablesModule } from "angular-datatables";
   ],
   imports: [
     BrowserModule,
-    DataTablesModule
+    DataTablesModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
