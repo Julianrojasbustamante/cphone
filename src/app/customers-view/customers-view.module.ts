@@ -7,7 +7,6 @@ import {AppRoutingModule} from "../app-routing.module";
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import {FormsModule} from "@angular/forms";
 import {ProductComponent} from "./product/product.component";
-import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import {HttpClientModule} from "@angular/common/http";
     DataTablesModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
   ]
 })
 export class CustomersViewModule { }

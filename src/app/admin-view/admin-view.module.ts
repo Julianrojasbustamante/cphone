@@ -4,6 +4,7 @@ import { DataTablesModule } from "angular-datatables";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductsComponent } from './products/products.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ProductsComponent } from './products/products.component';
     CommonModule,
     DataTablesModule,
     MatSlideToggleModule,
+    FormsModule,
   ]
 })
 export class AdminViewModule { }

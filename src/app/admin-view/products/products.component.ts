@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {NgForm} from "@angular/forms";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-products',
@@ -7,6 +9,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
   dtOptions: any = {};
+
+  isEditingProduct: boolean = false;
+
+  isPromotion: boolean = false;
+
+  productStatus: boolean = true;
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -18,6 +26,7 @@ export class ProductsComponent implements OnInit {
       language: {
         url: '../../assets/lang/datatable-spanish.json'
       },
+      // ajax: '../../assets/test-data/test-data.json',
       // ajax: (dataTablesParameters: any, callback) => {
       //   that.service.getUsers(dataTablesParameters)
       //     .subscribe((resp: any) => {
@@ -29,33 +38,61 @@ export class ProductsComponent implements OnInit {
       //       });
       //     });
       // },
-      columns: [{
-        title: 'ID',
-        data: 'id'
-      }, {
-        title: 'First name',
-        data: 'firstName'
-      }, {
-        title: 'Last name',
-        data: 'lastName'
-      }],
-      // Declare the use of the extension in the dom parameter
       dom: 'Bfrtip',
-      // Configure the buttons
       buttons: [
-        'columnsToggle',
-        'colvis',
         'copy',
         'print',
         'excel',
-        {
-          text: 'Some button',
-          key: '1',
-          action: function (e: any, dt: any, node: any, config: any) {
-            alert('Button activated');
-          }
-        }
       ]
     };
+  }
+
+  deleteProduct() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger',
+        cancelButton: 'mx-2 btn btn-success'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: '¿Estas seguro de eliminar este producto?',
+      text: "Esta acción no se puede reversar",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+          'Eliminado!',
+          'El producto fue eliminado.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Operación cancelada',
+          'El producto no fue eliminado.',
+          'error'
+        )
+      }
+    })
+  }
+
+  login(f: NgForm) {
+    const email = f.value.email;
+    const password = f.value.password;
+    if (password == "a1019150999A" && email == "julianrjs15@gmail.com"){
+    }else
+      Swal.fire(
+        'Inicio de sesión fallido',
+        'Usuario o contraseña incorrectos.',
+        'error'
+      )
   }
 }

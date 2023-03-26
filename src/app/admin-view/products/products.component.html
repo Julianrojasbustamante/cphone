@@ -1,79 +1,118 @@
 <div class="container">
   <div class="content">
     <div class="row">
-      <mat-slide-toggle>Toggle me!</mat-slide-toggle>
-      <div class="col-12 my-5">
+      <p class="my-5 fs-1">Administrador de productos</p>
+<!--      <mat-slide-toggle>Toggle me!</mat-slide-toggle>-->
+      <div class="col-12">
+        <button type="button"
+                class="my-2 mb-4 btn btn-danger"
+                data-bs-toggle="modal"
+                (click)="isEditingProduct = false"
+                data-bs-target="#register-product-modal">
+          Registrar producto
+        </button>
         <table datatable [dtOptions]="dtOptions" class="row-border hover">
           <thead>
           <tr>
             <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Unidades disponibles</th>
+            <th>Acciones</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td>1</td>
-            <td>Foo</td>
-            <td>Bar</td>
+            <td>Teclado Mecanico</td>
+            <td>$195.000</td>
+            <td>25</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" title="Eliminar"
+                        (click)="deleteProduct()"
+                        class="mx-1 btn btn-sm btn-danger">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+                <button type="button" title="Editar"
+                        (click)="isEditingProduct = true"
+                        data-bs-toggle="modal"
+                        data-bs-target="#register-product-modal"
+                        class="btn btn-sm btn-success">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Someone</td>
-            <td>Youknow</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Iamout</td>
-            <td>Ofinspiration</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Yoda</td>
-            <td>Skywalker</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Patrick</td>
-            <td>Dupont</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Barack</td>
-            <td>Obama</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>François</td>
-            <td>Holland</td>
-          </tr>
-          <tr>
+            <td>Torre Gamer</td>
+            <td>$8.000.000</td>
             <td>8</td>
-            <td>Michel</td>
-            <td>Popo</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>Chuck</td>
-            <td>Norris</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>Simon</td>
-            <td>Robin</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>Louis</td>
-            <td>Lin</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>Zelda</td>
-            <td>Link</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" title="Eliminar"
+                        (click)="deleteProduct()"
+                        class="mx-1 btn btn-sm btn-danger">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+                <button type="button" title="Editar"
+                        (click)="isEditingProduct = true"
+                        data-bs-toggle="modal"
+                        data-bs-target="#register-product-modal"
+                        class="btn btn-sm btn-success">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </div>
+            </td>
           </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade text-center" id="register-product-modal" tabindex="-1" aria-labelledby="register-product-modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <p class="modal-title fs-4" id="register-product-modalLabel">{{ isEditingProduct ? 'Editar' : 'Registrar'}} producto</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="isEditingProduct = false"></button>
+      </div>
+      <div class="modal-body">
+        <form class="item" #f="ngForm" (ngSubmit)="f.form.valid && login(f)">
+          <div class="mb-3 mx-5">
+            <input type="text" class="form-control" id="name" name="name" ngModel required placeholder="Nombre">
+          </div>
+          <div class="mb-3 mx-5">
+            <input type="number" class="form-control" id="price" name="price" ngModel required placeholder="Precio">
+          </div>
+          <div class="mb-3 mx-5">
+            <input type="number" class="form-control" id="unitsAvailable" name="unitsAvailable" ngModel required placeholder="Unidades disponibles">
+          </div>
+          <div class="mb-3 mx-5">
+            <textarea class="form-control" placeholder="Descripción" name="description" id="description"></textarea>
+          </div>
+          <div class="mb-3 mx-5">
+            <label for="mainImage" class="form-label">Imagen principal</label>
+            <input class="form-control form-control" name="mainImage" id="mainImage" type="file">
+          </div>
+          <div class="mb-3 mx-5">
+            <label for="images" class="form-label">Imagenes del producto</label>
+            <input class="form-control" name="images" type="file" id="images" multiple>
+          </div>
+          <div class="mb-3 mx-5">
+            <mat-slide-toggle name="isPromotion" [(ngModel)]="isPromotion">Está en promoción?: {{isPromotion ? 'Sí' : 'No'}}</mat-slide-toggle>
+          </div>
+          <div class="mb-3 mx-5" *ngIf="isPromotion">
+            <input type="number" class="form-control" id="promotionPrice" name="promotionPrice" ngModel required placeholder="Precio de promoción">
+          </div>
+          <div class="mb-3 mx-5">
+            <mat-slide-toggle name="status" [(ngModel)]="productStatus">Estado: {{productStatus ? 'Activo' : 'Inactivo'}}</mat-slide-toggle>
+          </div>
+          <button type="submit" class="px-5 py-2 my-3 rounded-pill btn btn-danger" data-bs-dismiss="modal">Registrar</button>
+        </form>
       </div>
     </div>
   </div>
