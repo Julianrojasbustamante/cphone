@@ -1,3 +1,5 @@
+# PARA COMPILAR DEBES USAR LA VERSION 18.10.0 de node.js Y LA VERSION 8.19.2 DE npm
+
 # Cphone
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
