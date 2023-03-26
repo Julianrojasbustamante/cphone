@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CustomersViewModule} from "./customers-view/customers-view.module";
 import {HeaderComponent} from "./core/header/header.component";
 import {FooterComponent} from "./core/footer/footer.component";
-import {HttpClientModule} from "@angular/common/http";
 import {AdminViewModule} from "./admin-view/admin-view.module";
+import {DataServices} from "./customers-view/services/data.services";
 
 @NgModule({
   declarations: [
@@ -23,10 +23,9 @@ import {AdminViewModule} from "./admin-view/admin-view.module";
     BrowserAnimationsModule,
     CustomersViewModule,
     FormsModule,
-    HttpClientModule,
     AdminViewModule,
   ],
-  providers: [],
+  providers: [DataServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

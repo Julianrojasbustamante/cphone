@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="content">
+    <p class="text-center display-2 my-4"><b>Catalogo</b></p>
+    <p class="display-5 my-5 text-center">{{selectedCategoria ?selectedCategoria.nombre: 'Escoge una categoría o busca tu producto'}}</p>
+    <div class="section" *ngIf="!selectedCategoria">
+      <div class="input-group my-4">
+        <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
+        <input type="text" class="form-control" placeholder="Buscar.." (keyup)="filtrarCategorias()" [(ngModel)]="categoriaBuscada">
+      </div>
+      <div class="row text-center" *ngIf="categoriaBuscada">
+        <h4 class="text-center my-4">Resultados de busqueda</h4>
+        <div class="col-md-3" *ngFor="let categoria of coincidenciasBusqueda">
+          <a [routerLink]="['/catalogo', categoria.id]" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">
+            {{categoria.nombre}}
+          </a>
+        </div>
+        <hr class="my-5 bg-danger" style="height: 3px">
+      </div>
+      <div class="row text-center" *ngIf="!categoriaBuscada">
+        <div class="col-md-3" *ngFor="let categoria of categorias">
+          <a [routerLink]="['/catalogo', categoria.id]" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">
+            {{categoria.nombre}}
+          </a>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="my-3 rounded-pill btn btn-primary px-5 py-2">Ver más...</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="selectedCategoria">
+      <button (click)="cleanSelectedCategoria()" class="btn btn-light text-danger rounded-pill border border-danger">
+        Volver
+      </button>
+      <div class="row d-flex justify-content-center">
+        <div class="card col-md-3 mx-3 my-3" *ngFor="let producto of selectedCategoria.productos" style="width: 18rem; border-radius: 25px;">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{producto.nombre}}</h5>
+            <hr class="bg-danger" style="height: 2px;">
+            <p class="card-text">{{producto.descripcion}}</p>
+          </div>
+          <a class="col-12 btn btn-success my-4" [routerLink]="['/producto', producto.id]">Ver detalle</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

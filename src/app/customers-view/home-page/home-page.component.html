@@ -5,9 +5,6 @@
     <div class="row">
       <div class="col-md-12">
         <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <button *ngFor="let producto of productosDestacados; index as i" type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class]="i==0?'active':''" [attr.aria-current]="i==0" aria-label="Slide 1"></button>
-          </div>
           <div class="carousel-inner">
             <div  *ngFor="let producto of productosDestacados; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">
               <img src="assets/img/{{producto.imagenPrincipal}}" class="opaco slider-height d-block w-100" alt="...">
