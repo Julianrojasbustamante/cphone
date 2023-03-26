@@ -11,11 +11,10 @@
       <span class="navbar-text">
          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item mx-1 my-1">
-            <a *ngIf="!token" class="py-2 rounded-pill btn btn-danger text-white" (click)="verSobreNosotros()">Sobre nosotros</a>
             <a *ngIf="token" class="py-2 rounded-pill btn btn-danger text-white">Bienvenido Julian Rojas</a>
           </li>
           <li *ngIf="!token" class="nav-item mx-1 my-1">
-            <button class="py-2 rounded-pill btn btn-light" (click)="verCatalogo()">Ver catálogo</button>
+            <button class="py-2 rounded-pill btn btn-danger text-white" (click)="verCatalogo()">Ver catálogo</button>
           </li>
           <li *ngIf="!token" class="nav-item mx-1 my-1">
             <a class="py-2 rounded-pill btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Iniciar sesión</a>
