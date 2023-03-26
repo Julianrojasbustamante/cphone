@@ -51,7 +51,25 @@ export class AppComponent implements OnInit {
     })
     // -------------------------------
     this.dtOptions = {
-      // ajax: 'data/data.json',
+      pagingType: 'full_numbers',
+      // pageLength: 25,
+      // serverSide: true,
+      processing: true,
+      responsive: true,
+      language: {
+        url: '../../assets/lang/datatable-spanish.json'
+      },
+      // ajax: (dataTablesParameters: any, callback) => {
+      //   that.service.getUsers(dataTablesParameters)
+      //     .subscribe((resp: any) => {
+      //       that.users = resp.data;
+      //       callback({
+      //         recordsTotal: resp.data.total,
+      //         recordsFiltered: resp.data.total,
+      //         data: resp.data.data,
+      //       });
+      //     });
+      // },
       columns: [{
         title: 'ID',
         data: 'id'
