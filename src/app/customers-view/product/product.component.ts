@@ -15,6 +15,9 @@ export class ProductComponent implements OnInit {
   productos:ProductoModel[] = [];
   teclados:ProductoModel[] = [];
   cantidad = 1;
+  is_promotion: boolean = true;
+  promotion_price: number = 25000;
+
   constructor(
     private route:ActivatedRoute,
     private dataService:DataServices

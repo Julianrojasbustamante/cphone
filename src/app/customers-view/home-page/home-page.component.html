@@ -2,7 +2,7 @@
   <div class="content">
     <p class="text-center display-2 my-4"><b>Inicio</b></p>
     <div class="row text-center justify-content-center">
-      <p class="description">Descripción sobre la pagina web del supermercado Poli-Market</p>
+      <p class="description">Supermercado Poli-Market somos calidad y economia, amabilidad y servicio. Gracias por preferirnos!</p>
     </div>
     <p class="display-5">Productos destacados</p>
     <div class="row">
@@ -10,11 +10,7 @@
         <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div  *ngFor="let producto of productosDestacados; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">
-              <img src="assets/img/{{producto.imagenPrincipal}}" class="opaco slider-height d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>{{producto.nombre}}</h5>
-                <p>{{producto.descripcion}}</p>
-              </div>
+              <img src="assets/img/slider/{{i + 1}}.jpg" class="opaco slider-height d-block w-100" alt="...">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
