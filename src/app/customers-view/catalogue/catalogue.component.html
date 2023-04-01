@@ -37,9 +37,16 @@
           <div class="card-body">
             <h5 class="card-title text-center">{{producto.nombre}}</h5>
             <hr class="bg-danger" style="height: 2px;">
-            <p class="card-text">{{producto.descripcion}}</p>
+            <img [src]="producto.imagenPrincipal" height="200" width="200" alt="">
+            <span *ngIf="producto.is_promotion" class="text-bg-danger p-1">Promoción</span>
+            <p class="card-text mt-3">{{producto.descripcion}}</p>
+            <p *ngIf="!producto.is_promotion" class="text-center h5">${{producto.precio | number}}</p>
+            <p *ngIf="producto.is_promotion" class="text-center h5">
+              <del class="text-danger mx-2">${{producto.precio | number}}</del>
+              <span>${{producto.promotion_price | number}}</span>
+            </p>
           </div>
-          <a class="col-12 btn btn-success my-4" [routerLink]="['/producto', producto.id]">Ver detalle</a>
+          <a class="col-12 btn btn-success mb-2" [routerLink]="['/producto', producto.id]">Ver detalle</a>
         </div>
       </div>
     </div>
