@@ -1,15 +1,20 @@
 <div class="container">
   <div class="content">
     <p class="text-center display-2 my-5"><b>Detalle del producto</b></p>
+    {{products}}
     <div class="row" *ngIf="selectedProduct">
       <div class="col-md-6">
         <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
           <div class="carousel-indicators">
-            <button *ngFor="let image of selectedProduct.imagenes; index as i" type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class]="i==0?'active':''" [attr.aria-current]="i==0" aria-label="Slide 1"></button>
+<!--            <button *ngFor="let image of selectedProduct.; index as i" type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class]="i==0?'active':''" [attr.aria-current]="i==0" aria-label="Slide 1"></button>-->
+                <button type="button" data-bs-target="#carouselExampleIndicators" attr.data-bs-slide-to="i" class="active" attr.aria-current="1" aria-label="Slide 1"></button>
           </div>
           <div class="carousel-inner">
-            <div  *ngFor="let image of selectedProduct.imagenes; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">
-              <img src="assets/img/{{image}}" class="d-block w-100" alt="...">
+<!--            <div  *ngFor="let image of selectedProduct.imagenes; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">-->
+<!--              <img src="assets/img/{{image}}" class="d-block w-100" alt="...">-->
+<!--            </div>-->
+            <div class="carousel-item active" data-bs-interval="10000">
+              <img [src]="selectedProduct.main_image" class="d-block w-100" alt="...">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -22,17 +27,17 @@
           </button>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="selectedProduct">
         <div class="card-body rounded-3 p-3" style="border: black solid 1px">
-          <h1 class="card-title text-center p-3">{{selectedProduct.nombre}}</h1>
+          <h1 class="card-title text-center p-3">{{selectedProduct.name}}</h1>
           <hr class="bg-danger" style="height: 2px;">
           <span *ngIf="is_promotion" class="text-bg-danger p-2">Producto con descuento</span>
           <div class="overflow-auto my-3" style="max-height: 200px; height: auto;">
-            <p class="card-text" style=""><span>{{selectedProduct.descripcion}}</span></p>
+            <p class="card-text" style=""><span>{{selectedProduct.description}}</span></p>
           </div>
-          <h2 *ngIf="!is_promotion" class="card-text text-center"><b>${{selectedProduct.precio * cantidad | number}}</b></h2>
-          <h2 *ngIf="is_promotion" class="card-text text-center"><span class="h6">Antes:</span><del class="text-danger">${{selectedProduct.precio * cantidad | number}}</del></h2>
-          <h2 *ngIf="is_promotion" class="card-text text-center"><span class="h6">Ahora: </span><b>${{promotion_price * cantidad | number}}</b></h2>
+          <h2 *ngIf="!is_promotion" class="card-text text-center"><b>${{selectedProduct.price * cantidad | number}}</b></h2>
+          <h2 *ngIf="is_promotion" class="card-text text-center"><span class="h6">Antes:</span><del class="text-danger">${{selectedProduct.price * cantidad | number}}</del></h2>
+          <h2 *ngIf="is_promotion" class="card-text text-center"><span class="h6">Ahora: </span><b>${{selectedProduct.promotion_price * cantidad | number}}</b></h2>
           <div class="row d-flex justify-content-center my-3">
             <p class="text-center h6">Cantidad:</p>
             <button *ngIf="cantidad > 1" class="col-1 btn btn-primary" (click)="cantidad = cantidad - 1">-</button>

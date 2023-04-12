@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ProductoModel} from "../models/producto.model";
 import {DataServices} from "../services/data.services";
 import Swal from'sweetalert2';
+import {ProductInterface} from "../models/product";
 
 @Component({
   selector: 'app-product',
@@ -11,8 +12,9 @@ import Swal from'sweetalert2';
 })
 export class ProductComponent implements OnInit {
   index: number | undefined;
-  selectedProduct: ProductoModel | undefined;
+  selectedProduct!: ProductInterface;
   productos:ProductoModel[] = [];
+  products:ProductInterface[] = [];
   teclados:ProductoModel[] = [];
   cantidad = 1;
   is_promotion: boolean = true;
@@ -54,7 +56,7 @@ export class ProductComponent implements OnInit {
     })
 
     swalWithBootstrapButtons.fire({
-      title: '¿Estas seguro de agregar el producto ' + this.selectedProduct?.nombre + " con la cantiadad " + this.cantidad + "?",
+      title: '¿Estas seguro de agregar el producto ' + this.selectedProduct!.name + " con la cantiadad " + this.cantidad + "?",
       text: "Sí ya lo tenias agregado y lo vuelves a agregar se reemplzará con la cantidad especificada",
       icon: 'warning',
       showCancelButton: true,
@@ -84,10 +86,15 @@ export class ProductComponent implements OnInit {
 
   obtenerProducto() {
     if (this.index != undefined)
-      this.dataService.obtenerProducto(this.index - 1).subscribe(
-        (producto:ProductoModel) => {
-          this.selectedProduct = producto;
+      this.dataService.getProduct(this.index).subscribe(
+        (product:ProductInterface) => {
+          this.selectedProduct = product;
         }
       );
+      // this.dataService.obtenerProducto(this.index - 1).subscribe(
+      //   (producto:ProductoModel) => {
+      //     this.selectedProduct = producto;
+      //   }
+      // );
   }
 }
