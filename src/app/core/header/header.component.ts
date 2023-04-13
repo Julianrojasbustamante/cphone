@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
-// import {DataServices} from "../../services/data.services";
-// import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import Swal from'sweetalert2';
+import {AdminService} from "../../admin-view/services/admin-service";
+import {AuthInterface} from "../../admin-view/models/auth";
 
 @Component({
   selector: 'app-header',
@@ -11,16 +11,16 @@ import Swal from'sweetalert2';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  // faCartShopping = faCartShopping;
   email:string | undefined;
   password:string | undefined;
   token: string | null | undefined;
   constructor(
     private router:Router,
-    // private service:DataServices
+    private adminService:AdminService
   ) { }
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('token');
   }
 
   verCatalogo() {
@@ -42,27 +42,37 @@ export class HeaderComponent implements OnInit {
   login(f: NgForm) {
     const email = f.value.email;
     const password = f.value.password;
-    if (password == "a1019150999A" && email == "julianrjs15@gmail.com"){
-      this.token = "sa";
-      Swal.fire(
-        'Inicio de sesión exitoso!',
-        'Bienvenido Julián Rojas Bustamante!',
-        'success'
-      )
-      this.router.navigate(['admin']);
-    }else
-      Swal.fire(
-        'Inicio de sesión fallido',
-        'Usuario o contraseña incorrectos.',
-        'error'
-      )
+    const auth: AuthInterface = {
+      username: email,
+      password: password,
+    };
+    if (password !== "" && email !== ""){
+      this.adminService.login(auth).then((token) => {
+        if (token.access){
+          this.token = token;
+          localStorage.setItem('token', token.access);
+          Swal.fire(
+            'Inicio de sesión exitoso!',
+            'Bienvenido Julián Rojas Bustamante!',
+            'success'
+          )
+          this.router.navigate(['admin']);
+        }
+      }).catch((error) => {
+        Swal.fire(
+          'Inicio de sesión fallido',
+          'Usuario o contraseña incorrectos.' + error,
+          'error'
+        )
+      });
+    }
   }
 
   mostrarModalRegistro() {
     this.router.navigate(['registro']);
   }
 
-  cerrarSesion() {
-    this.token = null;
+  logout() {
+    localStorage.removeItem('token');
   }
 }

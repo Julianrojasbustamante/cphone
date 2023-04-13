@@ -5,6 +5,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductsComponent } from './products/products.component';
 import {FormsModule} from "@angular/forms";
+import {AdminService} from "./services/admin-service";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {FormsModule} from "@angular/forms";
     DataTablesModule,
     MatSlideToggleModule,
     FormsModule,
-  ]
+  ],
+  providers: [AdminService],
 })
 export class AdminViewModule { }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
 import Swal from "sweetalert2";
+import {AdminService} from "../services/admin-service";
+import {ProductManageInterface} from "../models/product-manage";
 
 @Component({
   selector: 'app-products',
@@ -8,7 +9,13 @@ import Swal from "sweetalert2";
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+
+  constructor(
+    private adminService:AdminService
+  ) { }
   dtOptions: any = {};
+
+  products: ProductManageInterface[] = [];
 
   isEditingProduct: boolean = false;
 
@@ -16,7 +23,8 @@ export class ProductsComponent implements OnInit {
 
   productStatus: boolean = true;
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.adminService.getProducts().then((products) => this.products = products);
     this.dtOptions = {
       pagingType: 'full_numbers',
       // pageLength: 25,
@@ -27,17 +35,17 @@ export class ProductsComponent implements OnInit {
         url: '../../assets/lang/datatable-spanish.json'
       },
       // ajax: '../../assets/test-data/test-data.json',
-      // ajax: (dataTablesParameters: any, callback) => {
-      //   that.service.getUsers(dataTablesParameters)
-      //     .subscribe((resp: any) => {
-      //       that.users = resp.data;
-      //       callback({
-      //         recordsTotal: resp.data.total,
-      //         recordsFiltered: resp.data.total,
-      //         data: resp.data.data,
-      //       });
-      //     });
-      // },
+      /*ajax: (dataTablesParameters: any, callback) => {
+        that.service.getUsers(dataTablesParameters)
+          .subscribe((resp: any) => {
+            that.users = resp.data;
+            callback({
+              recordsTotal: resp.data.total,
+              recordsFiltered: resp.data.total,
+              data: resp.data.data,
+            });
+          });
+      },*/
       dom: 'Bfrtip',
       buttons: [
         'copy',
@@ -82,17 +90,5 @@ export class ProductsComponent implements OnInit {
         )
       }
     })
-  }
-
-  login(f: NgForm) {
-    const email = f.value.email;
-    const password = f.value.password;
-    if (password == "a1019150999A" && email == "julianrjs15@gmail.com"){
-    }else
-      Swal.fire(
-        'Inicio de sesión fallido',
-        'Usuario o contraseña incorrectos.',
-        'error'
-      )
   }
 }

@@ -11,7 +11,8 @@
                 data-bs-target="#register-product-modal">
           Registrar producto
         </button>
-        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <table *ngIf="products.length > 0"
+               datatable [dtOptions]="dtOptions" class="row-border hover">
           <thead>
           <tr>
             <th>ID</th>
@@ -22,33 +23,11 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td>Teclado Mecanico</td>
-            <td>$195.000</td>
-            <td>25</td>
-            <td>
-              <div class="btn-group">
-                <button type="button" title="Eliminar"
-                        (click)="deleteProduct()"
-                        class="mx-1 btn btn-sm btn-danger">
-                  <i class="far fa-trash-alt"></i>
-                </button>
-                <button type="button" title="Editar"
-                        (click)="isEditingProduct = true"
-                        data-bs-toggle="modal"
-                        data-bs-target="#register-product-modal"
-                        class="btn btn-sm btn-success">
-                  <i class="fas fa-edit"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Torre Gamer</td>
-            <td>$8.000.000</td>
-            <td>8</td>
+          <tr *ngFor="let product of products;">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>${{product.price | number}}</td>
+            <td>{{product.units_available}}</td>
             <td>
               <div class="btn-group">
                 <button type="button" title="Eliminar"
@@ -81,7 +60,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="isEditingProduct = false"></button>
       </div>
       <div class="modal-body">
-        <form class="item" #f="ngForm" (ngSubmit)="f.form.valid && login(f)">
+        <form class="item">
           <div class="mb-3 mx-5">
             <input type="text" class="form-control" id="name" name="name" ngModel required placeholder="Nombre">
           </div>
