@@ -92,7 +92,7 @@
           <div class="mb-3 mx-5">
             <mat-slide-toggle name="isPromotion" [(ngModel)]="selectedProduct.is_promotion">Está en promoción?: {{selectedProduct.is_promotion ? 'Sí' : 'No'}}</mat-slide-toggle>
           </div>
-          <div class="mb-3 mx-5" *ngIf="isPromotion">
+          <div class="mb-3 mx-5" *ngIf="selectedProduct.is_promotion">
             <input type="number" class="form-control" id="promotionPrice" name="promotionPrice" [(ngModel)]="selectedProduct.promotion_price" required placeholder="Precio de promoción">
           </div>
           <div class="mb-3 mx-5">
