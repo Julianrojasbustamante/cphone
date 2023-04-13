@@ -17,6 +17,8 @@ export class ProductsComponent implements OnInit {
 
   products: ProductManageInterface[] = [];
 
+  selectedProduct: ProductManageInterface | null = null;
+
   isEditingProduct: boolean = false;
 
   isPromotion: boolean = false;
@@ -24,7 +26,7 @@ export class ProductsComponent implements OnInit {
   productStatus: boolean = true;
 
   async ngOnInit() {
-    await this.adminService.getProducts().then((products) => this.products = products);
+    await this.getProducts();
     this.dtOptions = {
       pagingType: 'full_numbers',
       // pageLength: 25,
@@ -55,14 +57,29 @@ export class ProductsComponent implements OnInit {
     };
   }
 
-  deleteProduct() {
+  async getProducts() {
+    await this.adminService.getProducts()
+      .then((products) => this.products = products);
+  }
+
+  selectProduct(product: ProductManageInterface) {
+    this.isEditingProduct = true;
+    this.selectedProduct = product;
+  }
+
+  clearSelectedProduct(){
+    this.isEditingProduct = false;
+    this.selectedProduct = null;
+  }
+
+  async deleteProduct(id: number) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-danger',
         cancelButton: 'mx-2 btn btn-success'
       },
-      buttonsStyling: false
-    })
+      buttonsStyling: false,
+    });
 
     swalWithBootstrapButtons.fire({
       title: '¿Estas seguro de eliminar este producto?',
@@ -74,6 +91,9 @@ export class ProductsComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
+        this.adminService.deleteProduct(id).then(async (resp) => {
+          await this.getProducts();
+        });
         swalWithBootstrapButtons.fire(
           'Eliminado!',
           'El producto fue eliminado.',

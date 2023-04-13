@@ -31,12 +31,12 @@
             <td>
               <div class="btn-group">
                 <button type="button" title="Eliminar"
-                        (click)="deleteProduct()"
+                        (click)="deleteProduct(product.id)"
                         class="mx-1 btn btn-sm btn-danger">
                   <i class="far fa-trash-alt"></i>
                 </button>
                 <button type="button" title="Editar"
-                        (click)="isEditingProduct = true"
+                        (click)="selectProduct(product)"
                         data-bs-toggle="modal"
                         data-bs-target="#register-product-modal"
                         class="btn btn-sm btn-success">
@@ -52,26 +52,26 @@
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade text-center" id="register-product-modal" tabindex="-1" aria-labelledby="register-product-modalLabel" aria-hidden="true">
+<div *ngIf="selectedProduct" class="modal fade text-center" id="register-product-modal" tabindex="-1" aria-labelledby="register-product-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-warning">
-        <p class="modal-title fs-4" id="register-product-modalLabel">{{ isEditingProduct ? 'Editar' : 'Registrar'}} producto</p>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="isEditingProduct = false"></button>
+        <p class="modal-title fs-4" id="register-product-modalLabel">{{ selectedProduct ? 'Editar' : 'Registrar'}} producto</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearSelectedProduct()"></button>
       </div>
       <div class="modal-body">
         <form class="item">
           <div class="mb-3 mx-5">
-            <input type="text" class="form-control" id="name" name="name" ngModel required placeholder="Nombre">
+            <input type="text" class="form-control" id="name" name="name"  [(ngModel)]="selectedProduct.name" required placeholder="Nombre">
           </div>
           <div class="mb-3 mx-5">
-            <input type="number" class="form-control" id="price" name="price" ngModel required placeholder="Precio">
+            <input type="number" class="form-control" id="price" name="price" [(ngModel)]="selectedProduct.price" required placeholder="Precio">
           </div>
           <div class="mb-3 mx-5">
-            <input type="number" class="form-control" id="unitsAvailable" name="unitsAvailable" ngModel required placeholder="Unidades disponibles">
+            <input type="number" class="form-control" id="unitsAvailable" name="unitsAvailable" [(ngModel)]="selectedProduct.units_available" required placeholder="Unidades disponibles">
           </div>
           <div class="mb-3 mx-5">
-            <textarea class="form-control" placeholder="Descripción" name="description" id="description"></textarea>
+            <textarea class="form-control" placeholder="Descripción" name="description" [(ngModel)]="selectedProduct.description" id="description"></textarea>
           </div>
           <div class="mb-3 mx-5">
             <select class="form-select" aria-label="Default select example">
@@ -90,13 +90,13 @@
             <input class="form-control" name="images" type="file" id="images" multiple>
           </div>
           <div class="mb-3 mx-5">
-            <mat-slide-toggle name="isPromotion" [(ngModel)]="isPromotion">Está en promoción?: {{isPromotion ? 'Sí' : 'No'}}</mat-slide-toggle>
+            <mat-slide-toggle name="isPromotion" [(ngModel)]="selectedProduct.is_promotion">Está en promoción?: {{selectedProduct.is_promotion ? 'Sí' : 'No'}}</mat-slide-toggle>
           </div>
           <div class="mb-3 mx-5" *ngIf="isPromotion">
-            <input type="number" class="form-control" id="promotionPrice" name="promotionPrice" ngModel required placeholder="Precio de promoción">
+            <input type="number" class="form-control" id="promotionPrice" name="promotionPrice" [(ngModel)]="selectedProduct.promotion_price" required placeholder="Precio de promoción">
           </div>
           <div class="mb-3 mx-5">
-            <mat-slide-toggle name="status" [(ngModel)]="productStatus">Estado: {{productStatus ? 'Activo' : 'Inactivo'}}</mat-slide-toggle>
+            <mat-slide-toggle name="status" [(ngModel)]="selectedProduct.status">Estado: {{selectedProduct.status ? 'Activo' : 'Inactivo'}}</mat-slide-toggle>
           </div>
           <button type="submit" class="px-5 py-2 my-3 rounded-pill btn btn-danger" data-bs-dismiss="modal">Registrar</button>
         </form>

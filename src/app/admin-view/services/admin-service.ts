@@ -9,7 +9,7 @@ import {AuthInterface} from "../models/auth";
 export class AdminService {
   private urlApi = "http://127.0.0.1:8000/";
 
-  private token: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgxMzQyNTExLCJpYXQiOjE2ODEzNDA3MTEsImp0aSI6IjhmYzc1ZGQ2MDIwOTQ0ZDdhYjVhYjIyZDlkZmY2MTM4IiwidXNlcl9pZCI6MX0.VgyFtC4W6AamDKbZdVZNryBb36xzRaLnWh0F3YpoX10";
+  private token = localStorage.getItem('token');
 
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -34,14 +34,14 @@ export class AdminService {
   }
 
   updateProduct(product: ProductManageInterface): Promise<any>{
-    return this.httpclient.put(`${this.urlApi}category${product.id}`, product, { headers: this.headers }).toPromise();
+    return this.httpclient.put(`${this.urlApi}product_manage/${product.id}`, product, { headers: this.headers }).toPromise();
   }
 
   createProduct(product: ProductManageInterface): Promise<any>{
-    return this.httpclient.post(`${this.urlApi}category`, product, { headers: this.headers }).toPromise();
+    return this.httpclient.post(`${this.urlApi}product_manage`, product, { headers: this.headers }).toPromise();
   }
 
   deleteProduct(id: number): Promise<any>{
-    return this.httpclient.delete(`${this.urlApi}category${id}`, { headers: this.headers }).toPromise();
+    return this.httpclient.delete(`${this.urlApi}product_manage/${id}`, { headers: this.headers }).toPromise();
   }
 }
