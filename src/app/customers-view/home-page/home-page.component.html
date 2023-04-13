@@ -9,7 +9,7 @@
       <div class="col-md-12">
         <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
           <div class="carousel-inner">
-            <div  *ngFor="let producto of productosDestacados; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">
+            <div *ngFor="let product of featuredProducts; index as i" [class]="'carousel-item ' + (i==0?'active':'')" data-bs-interval="10000">
               <img src="assets/img/slider/{{i + 1}}.jpg" class="opaco slider-height d-block w-100" alt="...">
             </div>
           </div>
@@ -26,9 +26,9 @@
     </div>
     <p class="display-5 my-5">Categorias destacadas</p>
     <div class="row justify-content-center text-center">
-      <div class="col-md-3" *ngFor="let categoria of categorias; let i = index">
-        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 0" type="button" class="my-3 rounded-pill btn btn-warning px-5 py-2">{{categoria.nombre}}</a>
-        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 1" type="button" class="my-3 rounded-pill btn btn-danger px-5 py-2">{{categoria.nombre}}</a>
+      <div class="col-md-3" *ngFor="let categoria of categories; let i = index">
+        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 0" type="button" class="my-3 rounded-pill btn btn-warning px-5 py-2">{{categoria.name}}</a>
+        <a [routerLink]="['/catalogo', categoria.id]" *ngIf="i == 1" type="button" class="my-3 rounded-pill btn btn-danger px-5 py-2">{{categoria.name}}</a>
       </div>
     </div>
   </div>

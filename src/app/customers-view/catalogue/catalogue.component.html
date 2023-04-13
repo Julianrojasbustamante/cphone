@@ -1,52 +1,52 @@
 <div class="container">
   <div class="content">
     <p class="text-center display-2 my-4"><b>Catalogo</b></p>
-    <p class="display-5 my-5 text-center">{{selectedCategoria ?selectedCategoria.nombre: 'Escoge una categoría o busca tu producto'}}</p>
-    <div class="section" *ngIf="!selectedCategoria">
+    <p class="display-5 my-5 text-center">{{categoryProducts ? selectedCategory.name: 'Escoge una categoría o busca tu producto'}}</p>
+    <div class="section" *ngIf="!categoryProducts">
       <div class="input-group my-4">
         <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
-        <input type="text" class="form-control" placeholder="Buscar.." (keyup)="filtrarCategorias()" [(ngModel)]="categoriaBuscada">
+        <input type="text" class="form-control" placeholder="Buscar.." (keyup)="filterCategories()" [(ngModel)]="searchedCategory">
       </div>
-      <div class="row text-center" *ngIf="categoriaBuscada">
+      <div class="row text-center" *ngIf="searchedCategory">
         <h4 class="text-center my-4">Resultados de busqueda</h4>
-        <div class="col-md-3" *ngFor="let categoria of coincidenciasBusqueda">
-          <a [routerLink]="['/catalogo', categoria.id]" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">
-            {{categoria.nombre}}
+        <div class="col-md-3" *ngFor="let category of matchesSearch">
+          <a [routerLink]="['/catalogo', category.id]" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">
+            {{category.name}}
           </a>
         </div>
         <hr class="my-5 bg-danger" style="height: 3px">
       </div>
-      <div class="row text-center" *ngIf="!categoriaBuscada">
-        <div class="col-md-3" *ngFor="let categoria of categorias">
-          <a [routerLink]="['/catalogo', categoria.id]" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">
-            {{categoria.nombre}}
+      <div class="row text-center" *ngIf="!searchedCategory">
+        <div class="col-md-3" *ngFor="let category of categories">
+          <a [routerLink]="['/catalogo', category.id]" type="button" class="my-3 rounded-pill border border-dark btn btn-light px-5 py-2">
+            {{category.name}}
           </a>
         </div>
         <div class="col-md-3">
-          <button type="button" class="my-3 rounded-pill btn btn-primary px-5 py-2">Ver más...</button>
+          <button *ngIf="!searchedCategory" type="button" class="my-3 rounded-pill btn btn-primary px-5 py-2">Ver más...</button>
         </div>
       </div>
     </div>
 
-    <div class="section" *ngIf="selectedCategoria">
-      <button (click)="cleanSelectedCategoria()" class="btn btn-light text-danger rounded-pill border border-danger">
+    <div class="section" *ngIf="categoryProducts">
+      <button (click)="cleanSelectedCategory()" class="btn btn-light text-danger rounded-pill border border-danger">
         Volver
       </button>
       <div class="row d-flex justify-content-center">
-        <div class="card col-md-3 mx-3 my-3" *ngFor="let producto of selectedCategoria.productos" style="width: 18rem; border-radius: 25px;">
+        <div class="card col-md-3 mx-3 my-3" *ngFor="let product of categoryProducts.products" style="width: 18rem; border-radius: 25px;">
           <div class="card-body">
-            <p class="h6 card-title text-center">{{producto.nombre}}</p>
+            <p class="h6 card-title text-center">{{product.name}}</p>
             <hr class="bg-danger" style="height: 2px;">
-            <img [src]="producto.imagenPrincipal" height="200" width="200" alt="">
-            <span *ngIf="producto.is_promotion" class="text-bg-danger p-1">Promoción</span>
-            <p class="card-text mt-3">{{producto.descripcion}}</p>
-            <p *ngIf="!producto.is_promotion" class="text-center h5">${{producto.precio | number}}</p>
-            <p *ngIf="producto.is_promotion" class="text-center h5">
-              <del class="text-danger mx-2">${{producto.precio | number}}</del>
-              <span>${{producto.promotion_price | number}}</span>
+            <img [src]="product.main_image" height="200" width="200" alt="">
+            <span *ngIf="product.is_promotion" class="text-bg-danger p-1">Promoción</span>
+            <p class="card-text mt-3">{{product.description}}</p>
+            <p *ngIf="!product.is_promotion" class="text-center h5">${{product.price | number}}</p>
+            <p *ngIf="product.is_promotion" class="text-center h5">
+              <del class="text-danger mx-2">${{product.price | number}}</del>
+              <span>${{product.promotion_price | number}}</span>
             </p>
           </div>
-          <a class="col-12 btn btn-success mb-2" [routerLink]="['/producto', producto.id]">Ver detalle</a>
+          <a class="col-12 btn btn-success mb-2" [routerLink]="['/producto', product.id]">Ver detalle</a>
         </div>
       </div>
     </div>
