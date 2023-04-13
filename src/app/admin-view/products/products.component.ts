@@ -21,33 +21,16 @@ export class ProductsComponent implements OnInit {
 
   isEditingProduct: boolean = false;
 
-  isPromotion: boolean = false;
-
-  productStatus: boolean = true;
-
   async ngOnInit() {
     await this.getProducts();
     this.dtOptions = {
       pagingType: 'full_numbers',
       // pageLength: 25,
-      // serverSide: true,
       processing: true,
       responsive: true,
       language: {
         url: '../../assets/lang/datatable-spanish.json'
       },
-      // ajax: '../../assets/test-data/test-data.json',
-      /*ajax: (dataTablesParameters: any, callback) => {
-        that.service.getUsers(dataTablesParameters)
-          .subscribe((resp: any) => {
-            that.users = resp.data;
-            callback({
-              recordsTotal: resp.data.total,
-              recordsFiltered: resp.data.total,
-              data: resp.data.data,
-            });
-          });
-      },*/
       dom: 'Bfrtip',
       buttons: [
         'copy',
@@ -99,10 +82,7 @@ export class ProductsComponent implements OnInit {
           'El producto fue eliminado.',
           'success'
         )
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire(
           'Operación cancelada',
           'El producto no fue eliminado.',
