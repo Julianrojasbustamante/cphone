@@ -11,15 +11,17 @@ export class AdminService {
 
   private token = localStorage.getItem('token');
 
-  private headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + this.token
-  });
+  private headers: HttpHeaders;
 
   constructor(
     private httpclient:HttpClient,
     private route:Router
-  ) {}
+  ) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token
+    });
+  }
 
   getProducts(): Promise<any>{
     return this.httpclient.get<ProductInterface[]>(`${this.urlApi}product`).toPromise();
@@ -37,7 +39,7 @@ export class AdminService {
     return this.httpclient.put(`${this.urlApi}product_manage/${product.id}`, product, { headers: this.headers }).toPromise();
   }
 
-  createProduct(product: ProductManageInterface): Promise<any>{
+  saveProduct(product: ProductManageInterface): Promise<any>{
     return this.httpclient.post(`${this.urlApi}product_manage`, product, { headers: this.headers }).toPromise();
   }
 

@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductsComponent } from './products/products.component';
 import {FormsModule} from "@angular/forms";
 import {AdminService} from "./services/admin-service";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {AdminService} from "./services/admin-service";
     DataTablesModule,
     MatSlideToggleModule,
     FormsModule,
+    MatInputModule,
   ],
   providers: [AdminService],
 })

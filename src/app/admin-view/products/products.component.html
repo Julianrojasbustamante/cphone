@@ -2,12 +2,11 @@
   <div class="content">
     <div class="row">
       <p class="my-5 fs-1">Administrador de productos</p>
-<!--      <mat-slide-toggle>Toggle me!</mat-slide-toggle>-->
       <div class="col-12">
         <button type="button"
                 class="my-2 mb-4 btn btn-danger"
                 data-bs-toggle="modal"
-                (click)="isEditingProduct = false"
+                (click)="clearSelectedProduct()"
                 data-bs-target="#register-product-modal">
           Registrar producto
         </button>
@@ -52,53 +51,91 @@
   </div>
 </div>
 <!-- Modal -->
-<div *ngIf="selectedProduct" class="modal fade text-center" id="register-product-modal" tabindex="-1" aria-labelledby="register-product-modalLabel" aria-hidden="true">
+<div class="modal fade text-center" id="register-product-modal" tabindex="-1" aria-labelledby="register-product-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content" *ngIf="selectedProduct">
       <div class="modal-header bg-warning">
-        <p class="modal-title fs-4" id="register-product-modalLabel">{{ selectedProduct ? 'Editar' : 'Registrar'}} producto</p>
+        <p class="modal-title fs-4" id="register-product-modalLabel">{{ selectedProduct.id !== 0 ? 'Editar' : 'Registrar'}} producto</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearSelectedProduct()"></button>
       </div>
       <div class="modal-body">
         <form class="item">
-          <div class="mb-3 mx-5">
-            <input type="text" class="form-control" id="name" name="name"  [(ngModel)]="selectedProduct.name" required placeholder="Nombre">
+          <img [src]="selectedProduct.main_image"
+               *ngIf="selectedProduct.main_image"
+               class="my-3" height="250" width="250" alt="">
+          <div class="mb-3 mx-5 w-auto">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Nombre del producto</mat-label>
+              <input id="name" name="name"  matInput [(ngModel)]="selectedProduct.name" required placeholder="Nombre del producto">
+            </mat-form-field>
           </div>
-          <div class="mb-3 mx-5">
-            <input type="number" class="form-control" id="price" name="price" [(ngModel)]="selectedProduct.price" required placeholder="Precio">
+          <div class="mb-3 mx-5 w-auto">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Precio</mat-label>
+              <input type="number" matInput id="price"  name="price" [(ngModel)]="selectedProduct.price" required placeholder="Precio">
+              <span matTextPrefix *ngIf="!isNull(selectedProduct.price)">$&nbsp;</span>
+            </mat-form-field>
           </div>
-          <div class="mb-3 mx-5">
-            <input type="number" class="form-control" id="unitsAvailable" name="unitsAvailable" [(ngModel)]="selectedProduct.units_available" required placeholder="Unidades disponibles">
+          <div class="mb-3 mx-5 w-auto">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Unidades disponibles</mat-label>
+              <input type="number" matInput id="unitsAvailable" name="unitsAvailable" [(ngModel)]="selectedProduct.units_available" required placeholder="Unidades disponibles">
+            </mat-form-field>
           </div>
-          <div class="mb-3 mx-5">
-            <textarea class="form-control" placeholder="Descripción" name="description" [(ngModel)]="selectedProduct.description" id="description"></textarea>
+          <div class="mb-3 mx-5 w-auto">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput id="description" name="description" [(ngModel)]="selectedProduct.description" required placeholder="Descripción"></textarea>
+            </mat-form-field>
           </div>
-          <div class="mb-3 mx-5">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Selecciona una categoría</option>
-              <option value="1">Teclados</option>
-              <option value="2">PC gamer</option>
-              <option value="3">Mouse</option>
+          <div class="mb-3 mx-5 w-auto">
+            <label class="form-label d-flex justify-content-start">Categoría*</label>
+            <select class="form-select" id="category" name="category" [(ngModel)]="selectedProduct.category" required>
+              <option value="0" selected disabled>Selecciona una categoría</option>
+              <option *ngFor="let category of categoriesOptions" [value]="category.value">
+                {{category.label}}
+              </option>
             </select>
           </div>
           <div class="mb-3 mx-5">
-            <label for="mainImage" class="form-label">Imagen principal</label>
-            <input class="form-control form-control" name="mainImage" id="mainImage" type="file">
+            <label for="mainImage" class="form-label d-flex justify-content-start">Imagen principal*</label>
+            <input class="form-control form-control"
+                   (change)="getImageInBase64($event)"
+                   [(ngModel)]="selectedImage"
+                   name="mainImage" id="mainImage" type="file"
+                   accept="image/png, .jpeg, .jpg, image/gif">
           </div>
-          <div class="mb-3 mx-5">
-            <label for="images" class="form-label">Imagenes del producto</label>
-            <input class="form-control" name="images" type="file" id="images" multiple>
-          </div>
+<!--          <div class="mb-3 mx-5">-->
+<!--            <label for="images" class="form-label d-flex justify-content-start">Imagenes del producto</label>-->
+<!--            <input class="form-control" name="images" type="file" id="images" accept="image/png, .jpeg, .jpg, image/gif" multiple>-->
+<!--          </div>-->
           <div class="mb-3 mx-5">
             <mat-slide-toggle name="isPromotion" [(ngModel)]="selectedProduct.is_promotion">Está en promoción?: {{selectedProduct.is_promotion ? 'Sí' : 'No'}}</mat-slide-toggle>
           </div>
-          <div class="mb-3 mx-5" *ngIf="selectedProduct.is_promotion">
-            <input type="number" class="form-control" id="promotionPrice" name="promotionPrice" [(ngModel)]="selectedProduct.promotion_price" required placeholder="Precio de promoción">
+          <div class="mb-3 mx-5 w-auto">
+            <mat-form-field appearance="outline" class="w-100" *ngIf="selectedProduct.is_promotion">
+              <mat-label>Precio de promoción</mat-label>
+              <input type="number" matInput id="promotionPrice" name="promotionPrice" [(ngModel)]="selectedProduct.promotion_price" required placeholder="Precio de promoción">
+              <span matTextPrefix *ngIf="!isNull(selectedProduct.promotion_price)">$&nbsp;</span>
+            </mat-form-field>
           </div>
           <div class="mb-3 mx-5">
             <mat-slide-toggle name="status" [(ngModel)]="selectedProduct.status">Estado: {{selectedProduct.status ? 'Activo' : 'Inactivo'}}</mat-slide-toggle>
           </div>
-          <button type="submit" class="px-5 py-2 my-3 rounded-pill btn btn-danger" data-bs-dismiss="modal">Registrar</button>
+          <div class="alert-validation" *ngIf="!validateRequiredFields()">
+            <div class="alert alert-warning" role="alert">
+              <h4 class="alert-heading">Advertencia!</h4>
+              <p *ngIf="selectedProduct.id === 0">Llena los campos requeridos para poder crear el producto.</p>
+              <p *ngIf="selectedProduct.id !== 0">Llena los campos requeridos para poder grabar los cambios.</p>
+            </div>
+          </div>
+          <button type="submit"
+                  [disabled]="!validateRequiredFields()"
+                  (click)="saveProduct()"
+                  class="px-5 py-2 my-3 rounded-pill btn btn-danger"
+                  data-bs-dismiss="modal">
+            {{ selectedProduct.id !== 0 ? 'Guardar cambios' : 'Registrar'}}
+          </button>
         </form>
       </div>
     </div>
