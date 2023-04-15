@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
   <div class="container-fluid">
-    <button class="navbar-brand bg-warning border border-warning" (click)="verInicio()">Logo | Inicio</button>
+    <button class="navbar-brand bg-warning border border-warning" (click)="verInicio()"><img src="assets/img/logo.jpg" height="50" alt=""></button>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,10 +11,10 @@
       <span class="navbar-text">
          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item mx-1 my-1">
-            <a *ngIf="token" [routerLink]="['/admin']" class="py-2 rounded-pill btn btn-danger text-white">Bienvenido Julian Rojas</a>
+            <a *ngIf="token" [routerLink]="['/admin']" class="py-2 rounded-pill btn btn-danger text-white">Bienvenido {{user_name}}</a>
           </li>
-          <li *ngIf="!token" class="nav-item mx-1 my-1">
-            <button class="py-2 rounded-pill btn btn-danger text-white" (click)="verCatalogo()">Ver catálogo</button>
+          <li class="nav-item mx-1 my-1">
+            <button class="py-2 rounded-pill btn btn-light" (click)="verCatalogo()">Ver catálogo</button>
           </li>
           <li *ngIf="!token" class="nav-item mx-1 my-1">
             <a class="py-2 rounded-pill btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Iniciar sesión</a>

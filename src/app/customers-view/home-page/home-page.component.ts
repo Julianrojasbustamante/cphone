@@ -9,7 +9,7 @@ export class HomePageComponent {
   featuredProducts:any[] = [{}, {}, {}];
   categories:any[] = [
     {id: 1, name: "Promoción"},
-    {id: 2, name: "Más vendidos"}
+    {id: 3, name: "Más vendidos"}
   ];
   constructor() { }
 

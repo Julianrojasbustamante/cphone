@@ -9,14 +9,20 @@ import {AuthInterface} from "../models/auth";
 export class AdminService {
   private urlApi = "http://127.0.0.1:8000/";
 
-  private token = localStorage.getItem('token');
+  private token!: string;
 
-  private headers: HttpHeaders;
+  private headers!: HttpHeaders;
 
   constructor(
     private httpclient:HttpClient,
     private route:Router
-  ) {
+  ) {}
+
+  async updateHeaders(token: any) {
+    localStorage.setItem('token', token.access);
+    localStorage.setItem('user_id', token.user_id);
+    localStorage.setItem('user_name', token.user_name);
+    this.token = localStorage.getItem('token') as string;
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token

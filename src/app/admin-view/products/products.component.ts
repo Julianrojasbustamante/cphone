@@ -26,6 +26,8 @@ export class ProductsComponent implements OnInit {
 
   selectedImage: File | null = null;
 
+  user_id!: number;
+
   async ngOnInit() {
     await this.getProducts();
     this.dtOptions = {
@@ -45,6 +47,7 @@ export class ProductsComponent implements OnInit {
     };
     await this.getCategoriesOptions();
     await this.clearSelectedProduct();
+    this.user_id = parseInt(localStorage.getItem('user_id') as string);
   }
 
   async getProducts() {
@@ -70,6 +73,7 @@ export class ProductsComponent implements OnInit {
 
   async saveProduct() {
     if (this.validateRequiredFields()) {
+      this.selectedProduct.user = this.user_id;
       if (this.selectedProduct.id === 0)
         await this.adminService.saveProduct(this.selectedProduct).then((res) => {
           Swal.fire(
@@ -145,13 +149,13 @@ export class ProductsComponent implements OnInit {
       units_available: null,
       description: '',
       is_promotion: false,
-      promotion_price: null,
+      promotion_price: 0,
       main_image: '',
       status: true,
       created_at: this.getCurrentDate(),
       updated_at: this.getCurrentDate(),
       category: 0,
-      user: 1
+      user: this.user_id,
     } as ProductManageInterface;
     this.selectedImage = null;
   }

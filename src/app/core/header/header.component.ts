@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   email:string | undefined;
   password:string | undefined;
   token: string | null | undefined;
+  user_name!: string;
   constructor(
     private router:Router,
     private adminService:AdminService
@@ -21,25 +22,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
+    this.user_name = localStorage.getItem('user_name') as string;
   }
 
   verCatalogo() {
     this.router.navigate(['catalogo']);
   }
-
-  verSobreNosotros() {
-    this.router.navigate(['sobre-nosotros']);
-  }
-
   verInicio() {
     this.router.navigate(['inicio']);
   }
 
-  verCarritoCompras() {
-    this.router.navigate(['carrito-compras']);
-  }
-
-  login(f: NgForm) {
+  async login(f: NgForm) {
     const email = f.value.email;
     const password = f.value.password;
     const auth: AuthInterface = {
@@ -47,13 +40,14 @@ export class HeaderComponent implements OnInit {
       password: password,
     };
     if (password !== "" && email !== ""){
-      this.adminService.login(auth).then((token) => {
-        if (token.access){
+      this.adminService.login(auth).then(async (token) => {
+        if (token.access) {
           this.token = token;
-          localStorage.setItem('token', token.access);
+          await this.adminService.updateHeaders(token);
+          this.user_name = localStorage.getItem('user_name') as string;
           Swal.fire(
             'Inicio de sesión exitoso!',
-            'Bienvenido Julián Rojas Bustamante!',
+            `Bienvenido ${token.user_name}!`,
             'success'
           )
           this.router.navigate(['admin']);
