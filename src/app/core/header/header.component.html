@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
   <div class="container-fluid">
-    <button class="navbar-brand bg-warning border border-warning" (click)="verInicio()"><img src="assets/img/logo.jpg" height="50" alt=""></button>
+    <button class="navbar-brand bg-warning border border-warning" (click)="showHome()"><img src="assets/img/logo.jpg" height="50" alt=""></button>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,10 +14,10 @@
             <a *ngIf="token" [routerLink]="['/admin']" class="py-2 rounded-pill btn btn-danger text-white">Bienvenido {{user_name}}</a>
           </li>
           <li class="nav-item mx-1 my-1">
-            <button class="py-2 rounded-pill btn btn-light" (click)="verCatalogo()">Ver catálogo</button>
+            <button class="py-2 rounded-pill btn btn-light" (click)="showCatalogue()">Ver catálogo</button>
           </li>
           <li *ngIf="!token" class="nav-item mx-1 my-1">
-            <a class="py-2 rounded-pill btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Iniciar sesión</a>
+            <a class="py-2 rounded-pill btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">Iniciar sesión</a>
           </li>
            <li *ngIf="token" class="nav-item mx-1 my-1">
              <a class="py-2 rounded-pill btn btn-light" href="#" (click)="logout()">Salir</a>
@@ -28,11 +28,11 @@
   </div>
 </nav>
 <!-- Modal -->
-<div class="modal fade text-center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade text-center" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-warning">
-        <h5 class="modal-title" id="exampleModalLabel">Ingresar</h5>
+        <p class="modal-title h5" id="loginModalLabel">Ingresar</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

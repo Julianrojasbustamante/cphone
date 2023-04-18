@@ -11,10 +11,10 @@ import {AuthInterface} from "../../admin-view/models/auth";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  email:string | undefined;
-  password:string | undefined;
   token: string | null | undefined;
+
   user_name!: string;
+
   constructor(
     private router:Router,
     private adminService:AdminService
@@ -25,10 +25,10 @@ export class HeaderComponent implements OnInit {
     this.user_name = localStorage.getItem('user_name') as string;
   }
 
-  verCatalogo() {
+  showCatalogue() {
     this.router.navigate(['catalogo']);
   }
-  verInicio() {
+  showHome() {
     this.router.navigate(['inicio']);
   }
 
@@ -55,15 +55,11 @@ export class HeaderComponent implements OnInit {
       }).catch((error) => {
         Swal.fire(
           'Inicio de sesión fallido',
-          'Usuario o contraseña incorrectos.' + error,
+          'Usuario o contraseña incorrectos.',
           'error'
         )
       });
     }
-  }
-
-  mostrarModalRegistro() {
-    this.router.navigate(['registro']);
   }
 
   logout() {
