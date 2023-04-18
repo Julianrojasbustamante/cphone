@@ -33,10 +33,6 @@ export class AdminService {
     return this.httpclient.get<ProductInterface[]>(`${this.urlApi}product`).toPromise();
   }
 
-  getProduct(id: number): Promise<any>{
-    return this.httpclient.get<ProductInterface[]>(`${this.urlApi}product/${id}`).toPromise();
-  }
-
   login(credentials: AuthInterface): Promise<any>{
     return this.httpclient.post(`${this.urlApi}login`, credentials).toPromise();
   }

@@ -32,7 +32,6 @@ export class ProductsComponent implements OnInit {
     await this.getProducts();
     this.dtOptions = {
       pagingType: 'full_numbers',
-      // pageLength: 25,
       processing: true,
       responsive: true,
       language: {
@@ -141,7 +140,6 @@ export class ProductsComponent implements OnInit {
   }
 
   async clearSelectedProduct(){
-    // console.log(this.selectedProduct);
     this.selectedProduct = {
       id: 0,
       name: '',
