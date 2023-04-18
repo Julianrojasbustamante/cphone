@@ -1,0 +1,17 @@
+.quantity-field {
+  max-width: 200px;
+  width: 70px;
+}
+
+.description-style {
+  max-height: 200px;
+  height: auto;
+}
+
+.space-card-style {
+  height: 2px;
+}
+
+.card-product-detail-style {
+  border: black solid 1px;
+}

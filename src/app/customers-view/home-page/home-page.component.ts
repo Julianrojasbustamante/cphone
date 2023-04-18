@@ -8,11 +8,9 @@ import { Component } from '@angular/core';
 export class HomePageComponent {
   featuredProducts:any[] = [{}, {}, {}];
   categories:any[] = [
-    {id: 1, name: "Promoción"},
-    {id: 3, name: "Más vendidos"}
+    {id: 1, name: "Promoción", color: "btn-warning"},
+    {id: 3, name: "Más vendidos", color: "btn-danger text-white"}
   ];
   constructor() { }
-
-  ngOnInit(): void {
-  }
 }
+

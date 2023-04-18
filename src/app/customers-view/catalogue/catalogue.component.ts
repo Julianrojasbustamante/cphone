@@ -16,7 +16,9 @@ export class CatalogueComponent implements OnInit {
     private dataService:DataServices
   ) { }
   searchedCategory = "";
+
   matchesSearch: CategoryInterface[] | null = null;
+
   index: number | undefined;
 
   categories: CategoryInterface[] = [];
@@ -37,10 +39,6 @@ export class CatalogueComponent implements OnInit {
 
   async getCategories() {
     await this.dataService.getCategories().then((response) => this.categories = response);
-  }
-
-  async getCategory(id: number) {
-    await this.dataService.getCategory(id).then((response) => this.selectedCategory = response);
   }
 
   cleanSelectedCategory() {

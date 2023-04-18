@@ -14,7 +14,7 @@
             {{category.name}}
           </a>
         </div>
-        <hr class="my-5 bg-danger" style="height: 3px">
+        <hr class="my-5 bg-danger space-height">
       </div>
       <div class="row text-center" *ngIf="!searchedCategory">
         <div class="col-md-3" *ngFor="let category of categories">
@@ -30,10 +30,10 @@
         Volver
       </button>
       <div class="row d-flex justify-content-center">
-        <div class="card col-md-3 mx-3 my-3" *ngFor="let product of categoryProducts.products" style="width: 18rem; border-radius: 25px;">
+        <div class="card col-md-3 mx-3 my-3 card-catalogue" *ngFor="let product of categoryProducts.products">
           <div class="card-body">
             <p class="h6 card-title text-center">{{product.name}}</p>
-            <hr class="bg-danger" style="height: 2px;">
+            <hr class="bg-danger btn-height">
             <img [src]="product.main_image" height="200" width="200" alt="">
             <span *ngIf="product.is_promotion" class="text-bg-danger p-1">Promoción</span>
             <p class="card-text mt-3">{{product.description}}</p>

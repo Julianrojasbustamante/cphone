@@ -56,7 +56,7 @@
     <div class="modal-content" *ngIf="selectedProduct">
       <div class="modal-header bg-warning">
         <p class="modal-title fs-4" id="register-product-modalLabel">{{ selectedProduct.id !== 0 ? 'Editar' : 'Registrar'}} producto</p>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearSelectedProduct()"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="item">
@@ -72,20 +72,27 @@
           <div class="mb-3 mx-5 w-auto">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Precio</mat-label>
-              <input type="number" matInput id="price"  name="price" [(ngModel)]="selectedProduct.price" required placeholder="Precio">
+              <input type="number" matInput
+                     id="price" name="price"
+                     [(ngModel)]="selectedProduct.price"
+                     required placeholder="Precio">
               <span matTextPrefix *ngIf="!isNull(selectedProduct.price)">$&nbsp;</span>
             </mat-form-field>
           </div>
           <div class="mb-3 mx-5 w-auto">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Unidades disponibles</mat-label>
-              <input type="number" matInput id="unitsAvailable" name="unitsAvailable" [(ngModel)]="selectedProduct.units_available" required placeholder="Unidades disponibles">
+              <input type="number" matInput id="unitsAvailable" name="unitsAvailable"
+                     [(ngModel)]="selectedProduct.units_available"
+                     required placeholder="Unidades disponibles">
             </mat-form-field>
           </div>
           <div class="mb-3 mx-5 w-auto">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Descripción</mat-label>
-              <textarea matInput id="description" name="description" [(ngModel)]="selectedProduct.description" required placeholder="Descripción"></textarea>
+              <textarea matInput id="description" name="description"
+                        [(ngModel)]="selectedProduct.description"
+                        required placeholder="Descripción"></textarea>
             </mat-form-field>
           </div>
           <div class="mb-3 mx-5 w-auto">
